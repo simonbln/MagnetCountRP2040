@@ -45,8 +45,8 @@ class MagnetState:
     DETECTED = 1
     UNCERTAIN = 2
 
-THRESHOLD_HIGH = 500
-THRESHOLD_LOW = 250
+THRESHOLD_HIGH = 1500
+THRESHOLD_LOW = 1000
 
 current_internal_state = MagnetState.ABSENT
 
@@ -54,6 +54,7 @@ def get_magnet_state():
     global current_internal_state
     val = hall.read_u16()
     diff = abs(val - 32768)
+    #print(diff)
     
     if diff > THRESHOLD_HIGH:
         current_internal_state = MagnetState.DETECTED
@@ -81,6 +82,7 @@ while True:
             magnet_already_counted = False
 
     if count != count_old:
+        print(count)
         display_fixed_number(count)
         count_old = count
     else:
